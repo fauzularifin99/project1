@@ -5,7 +5,7 @@ twilio
 requests
 beautifulsoup4
 pypdf
+opencv-python-headless==4.10.0.84
 ultralytics
-opencv-python-headless
 streamlit-webrtc
 av
