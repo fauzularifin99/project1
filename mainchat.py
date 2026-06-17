@@ -39,13 +39,34 @@ def load_model():
 class DangerDetector:
     def __init__(self):
         self.alert_counter = 0
+        self.frame_count = 0
+        self.last_danger_detected = False
+        self.model = load_model()
 
     def recv(self, frame):
         import av
-    
+        import cv2
+
         img = frame.to_ndarray(format="bgr24")
-    
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
+
+        self.frame_count += 1
+
+        if self.frame_count % 5 == 0:
+            results = self.model(img, conf=CONF_THRESHOLD, imgsz=320, verbose=False)[0]
+
+            danger_detected = False
+
+            for box in results.boxes:
+                cls_id = int(box.cls[0])
+                label = self.model.names[cls_id]
+
+                if label in DANGEROUS_CLASSES:
+                    danger_detected = True
+                    break
+
+            self.last_danger_detected = danger_detected
+
+        danger_detected = self.last_danger_detected
 
         if danger_detected:
             self.alert_counter = ALERT_HOLD_FRAMES
@@ -640,11 +661,18 @@ elif st.session_state.halaman == 3:
         from streamlit_webrtc import webrtc_streamer
 
         st.markdown('<div class="section-label">VIDEO AI DETECTION</div>', unsafe_allow_html=True)
-        webrtc_streamer(
-            key="danger-detection",
-            video_processor_factory=DangerDetector,
-            media_stream_constraints={"video": True, "audio": False},
-        )
+      webrtc_streamer(
+          key="danger-detection",
+          video_processor_factory=DangerDetector,
+          media_stream_constraints={
+              "video": {
+                  "width": 320,
+                  "height": 240,
+                  "frameRate": 10
+              },
+              "audio": False
+          },
+      )
 
     with kolom_chat:
         st.markdown('<div class="section-label">RIWAYAT CHAT</div>', unsafe_allow_html=True)
