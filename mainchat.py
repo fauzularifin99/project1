@@ -73,11 +73,11 @@ class DangerDetector:
         else:
             self.alert_counter = max(0, self.alert_counter - 1)
         if self.alert_counter > 0:
-            cv2.rectangle(img, (0, img.shape[0] - 50), (img.shape[1], img.shape[0]), (0, 0, 255), -1)
+            cv2.rectangle(img, (0, img.shape[0] - 40), (img.shape[1], img.shape[0]), (0, 0, 255), -1)
             cv2.putText(img, "ALERT BAHAYA", (20, img.shape[0] - 15),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         else:
-            cv2.rectangle(img, (0, img.shape[0] - 50), (img.shape[1], img.shape[0]), (0, 180, 0), -1)
+            cv2.rectangle(img, (0, img.shape[0] - 40), (img.shape[1], img.shape[0]), (0, 180, 0), -1)
             cv2.putText(img, "AMAN", (20, img.shape[0] - 15),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
 
