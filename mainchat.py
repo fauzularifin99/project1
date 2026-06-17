@@ -33,8 +33,12 @@ SAFE_CLASS = "safe"
 
 @st.cache_resource
 def load_model():
-   from ultralytics import YOLO
-   return YOLO(MODEL_PATH)
+    try:
+        from ultralytics import YOLO
+        return YOLO(MODEL_PATH)
+    except Exception as e:
+        st.session_state.MODEL_ERROR = str(e)
+        return None
 
 class DangerDetector:
     def __init__(self):
@@ -44,10 +48,15 @@ class DangerDetector:
     def recv(self, frame):
         import av
         import cv2
-
+   
         img = frame.to_ndarray(format="bgr24")
-
-        results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
+   
+        if self.model is None:
+            cv2.putText(img, "MODEL ERROR", (30, 60),
+                       cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
+            return av.VideoFrame.from_ndarray(img, format="bgr24")
+   
+       results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
 
         danger_detected = False
 
