@@ -54,7 +54,7 @@ class DangerDetector:
         img = frame.to_ndarray(format="bgr24")
         self.frame_count += 1
         
-            if self.frame_count % 3 == 0:
+        if self.frame_count % 3 == 0:
                 results = self.model(img, conf=CONF_THRESHOLD, imgsz=320, verbose=False)[0]
         
                 danger_detected = False
