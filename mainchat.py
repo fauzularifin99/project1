@@ -52,7 +52,7 @@ class DangerDetector:
         self.frame_count += 1
 
         if self.frame_count % 5 == 0:
-            results = self.model(img, conf=CONF_THRESHOLD, imgsz=320, verbose=False)[0]
+            results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
 
             danger_detected = False
 
