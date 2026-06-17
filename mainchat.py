@@ -39,7 +39,6 @@ def load_model():
 class DangerDetector:
     def __init__(self):
         self.alert_counter = 0
-        self.model = load_model()
 
     def recv(self, frame):
         import av
