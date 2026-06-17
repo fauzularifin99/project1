@@ -72,7 +72,7 @@ class DangerDetector:
             self.alert_counter = ALERT_HOLD_FRAMES
         else:
             self.alert_counter = max(0, self.alert_counter - 1)
-        banner_h = int(img.shape[0] * 0.10)
+        banner_h = int(img.shape[0] * 0.7)
         if self.alert_counter > 0:
             cv2.rectangle(img, (0, img.shape[0] - 80), (img.shape[1], img.shape[0]), (0, 0, 255), -1)
             cv2.putText(img, "ALERT BAHAYA", (30, img.shape[0] - 25),
