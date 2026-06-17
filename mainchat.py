@@ -648,7 +648,7 @@ elif st.session_state.halaman == 3:
         min-height: 40px;
     }
     iframe {
-        max-height: 330px;
+        max-height: 280px;
     }
     </style>
     """, unsafe_allow_html=True)
