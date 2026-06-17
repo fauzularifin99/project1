@@ -72,11 +72,10 @@ class DangerDetector:
             self.alert_counter = ALERT_HOLD_FRAMES
         else:
             self.alert_counter = max(0, self.alert_counter - 1)
-        banner_h = int(img.shape[0] * 0.7)
         if self.alert_counter > 0:
-            cv2.rectangle(img, (0, img.shape[0] - 80), (img.shape[1], img.shape[0]), (0, 0, 255), -1)
-            cv2.putText(img, "ALERT BAHAYA", (30, img.shape[0] - 25),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.4, (255, 255, 255), 2)
+            cv2.rectangle(img, (0, img.shape[0] - 30), (img.shape[1], img.shape[0]), (0, 0, 255), -1)
+            cv2.putText(img, "ALERT BAHAYA", (20, img.shape[0] - 8),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
         else:
             cv2.rectangle(img, (0, img.shape[0] - 80), (img.shape[1], img.shape[0]), (0, 180, 0), -1)
             cv2.putText(img, "AMAN", (30, img.shape[0] - 25),
