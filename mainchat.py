@@ -33,37 +33,20 @@ SAFE_CLASS = "safe"
 
 @st.cache_resource
 def load_model():
-    try:
-        from ultralytics import YOLO
-        return YOLO(MODEL_PATH)
-    except Exception as e:
-        st.session_state.MODEL_ERROR = str(e)
-        return None
+   from ultralytics import YOLO
+   return YOLO(MODEL_PATH)
 
 class DangerDetector:
     def __init__(self):
         self.alert_counter = 0
-        self.frame_count = 0
-        self.last_danger_detected = False
         self.model = load_model()
 
-    # def recv(self, frame):
-    #     import av
-    #     import cv2
-
-    #     img = frame.to_ndarray(format="bgr24")
-
-    #     results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
-
-    #     danger_detected = False
-
-    #     for box in results.boxes:
-    #         cls_id = int(box.cls[0])
-    #         label = self.model.names[cls_id]
-
-    #         if label in DANGEROUS_CLASSES:
-    #             danger_detected = True
-    #             break
+    def recv(self, frame):
+        import av
+    
+        img = frame.to_ndarray(format="bgr24")
+    
+        return av.VideoFrame.from_ndarray(img, format="bgr24")
 
         if danger_detected:
             self.alert_counter = ALERT_HOLD_FRAMES
