@@ -56,7 +56,7 @@ class DangerDetector:
                        cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
             return av.VideoFrame.from_ndarray(img, format="bgr24")
    
-       results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
+        results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
 
         danger_detected = False
 
