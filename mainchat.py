@@ -69,7 +69,7 @@ class DangerDetector:
         
                 self.last_danger_detected = danger_detected
         
-            danger_detected = self.last_danger_detected
+        danger_detected = self.last_danger_detected
 
         if danger_detected:
             self.alert_counter = ALERT_HOLD_FRAMES
