@@ -47,29 +47,23 @@ class DangerDetector:
         self.last_danger_detected = False
         self.model = load_model()
 
-    def recv(self, frame):
-        import av
-        import cv2
-   
-        img = frame.to_ndarray(format="bgr24")
-        self.frame_count += 1
-        
-        if self.frame_count % 3 == 0:
-                results = self.model(img, conf=CONF_THRESHOLD, imgsz=320, verbose=False)[0]
-        
-                danger_detected = False
-        
-                for box in results.boxes:
-                    cls_id = int(box.cls[0])
-                    label = self.model.names[cls_id]
-        
-                    if label in DANGEROUS_CLASSES:
-                        danger_detected = True
-                        break
-        
-                self.last_danger_detected = danger_detected
-        
-        danger_detected = self.last_danger_detected
+    # def recv(self, frame):
+    #     import av
+    #     import cv2
+
+    #     img = frame.to_ndarray(format="bgr24")
+
+    #     results = self.model(img, conf=CONF_THRESHOLD, imgsz=640, verbose=False)[0]
+
+    #     danger_detected = False
+
+    #     for box in results.boxes:
+    #         cls_id = int(box.cls[0])
+    #         label = self.model.names[cls_id]
+
+    #         if label in DANGEROUS_CLASSES:
+    #             danger_detected = True
+    #             break
 
         if danger_detected:
             self.alert_counter = ALERT_HOLD_FRAMES
